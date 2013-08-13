@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+
+	<context:component-scan	base-package="com.accenture.amtra.controller" />
+	<context:component-scan	base-package="com.accenture.amtra.service" />
+	<context:component-scan	base-package="com.accenture.amtra.dao" />
+	<context:component-scan	base-package="com.accenture.amtra.validator"/>
+
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<property name="viewClass">
+			<value>
+				org.springframework.web.servlet.view.tiles2.TilesView
+			</value>
+		</property>
+	</bean>
+	<bean id="tilesConfigurer"
+		class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
+		<property name="definitions">
+			<list>
+				<value>/WEB-INF/tiles.xml</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>application</value>
+				<value>UserForm</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean 
+class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	<property name="location">
+		<value>classpath:jdbc.properties</value>
+	</property>
+</bean>
+         
+	<bean id="dataSource" 
+         class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	<property name="driverClassName" value="${jdbc.driverClassName}" />
+	<property name="url" value="${jdbc.databaseurl}" />
+	<property name="username" value="${jdbc.username}" />
+	<property name="password" value="${jdbc.password}" />
+</bean>
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+            <property name="dataSource" ref="dataSource" />
+            <property name="annotatedClasses">
+                    <list>
+                         <value>com.accenture.amtra.persistence.AttachmentDetailsPersistence</value>
+                         <value>com.accenture.amtra.persistence.BlockDetailsPersistence</value>
+                         <value>com.accenture.amtra.persistence.DtcPevDetailsPersistence</value>
+                         <value>com.accenture.amtra.persistence.HolidayDetailsPersistence</value>
+                         <value>com.accenture.amtra.persistence.MtpDetailsPersistence</value>
+                         <value>com.accenture.amtra.persistence.QueueDetailsPersistence</value>
+                         <value>com.accenture.amtra.persistence.RoleDetailsPersistence</value>
+                         <value>com.accenture.amtra.persistence.SeverityDetailsPersistence</value>
+                         <value>com.accenture.amtra.persistence.SlaDetailPersistence</value>
+                         <value>com.accenture.amtra.persistence.SsaDetailsPersistence</value>
+                         <value>com.accenture.amtra.persistence.StatusDetailsPersistence</value>
+                         <value>com.accenture.amtra.persistence.StrategyDetailPesistence</value>
+                         <value>com.accenture.amtra.persistence.TestResultDetailsPersistence</value>
+                         <value>com.accenture.amtra.persistence.TicketDetailsPersistence</value>
+                         <value>com.accenture.amtra.persistence.TicketTransactionHistoryPersistenc</value>
+                         <value>com.accenture.amtra.persistence.TicketTypePersistence</value>
+                         <value>com.accenture.amtra.persistence.UserDetailsPersistence</value>
+                         <!-- <value>com.accenture.amtra.persistence.UserSsaAssociationPersistence</value> -->
+                         <value>com.accenture.amtra.persistence.UserTransactionHistoryPersistence</value>
+                         <!-- <value>com.accenture.amtra.persistence.UserRolesAssociationPersistence</value> -->
+                    </list>
+            </property>
+            <property name="hibernateProperties">
+        <props>
+            <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+            <prop key="hibernate.max_fetch_depth">3</prop>
+            <prop key="hibernate.jdbc.fetch_size">50</prop>
+            <prop key="hibernate.jdbc.batch_size">10</prop>
+            <prop key="hibernate.show_sql">true</prop>
+            <prop key="hibernate.hbm2ddl.auto">update</prop>
+            <prop key="hibernate.validator.apply_to_ddl">false</prop> 
+			<prop key="hibernate.validator.autoregister_listeners">false</prop>
+        </props>
+    </property>
+    </bean>
+    
+    <tx:annotation-driven />
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager"><property name="sessionFactory" ref="sessionFactory" /></bean>
+    
+</beans>

@@ -1,0 +1,61 @@
+@CHARSET "ISO-8859-1";
+
+.header{
+	 font-size:40px;
+	 color:white;
+}
+
+.left-menu{
+	background-color:#62F24B;
+	height: 100%;
+	width: 100%;
+}
+
+.ui-menu { 
+	width: 150px; 
+}
+
+table td 
+{
+  align : center;
+}
+
+.amtra_form_lable{
+	background-color: #9DBD5C;
+    height:20px;
+    width:150px;
+}
+
+.login-left-panel{
+	 background-image: url("../../images/login-sidebar.png");
+	 height:400px;
+	 width:600px;
+}
+
+.form_label{
+        /* padding-left: 25px; */
+        padding-bottom: 2px;
+        font-size:15px;
+        text-align: center;
+        font-weight:bold;
+        input[type="text"]:focus{
+        outline: none;
+        box-shadow: 0px 0px 5px #9DBD5C;
+        border-style: solid;
+        border:1px solid #9DBD5C; 
+        }
+
+.error {
+	color: #ff0000;
+}
+
+.errorblock{
+	color: #000;
+	background-color: #ffEEEE;
+	border: 3px solid #ff0000;
+	padding:8px;
+	margin:16px;
+}
+
+
+
